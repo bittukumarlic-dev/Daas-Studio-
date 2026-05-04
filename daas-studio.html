@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Daas Studio – Ravi Kumar</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #f5f0e8;
+      --dark: #1a1410;
+      --gold: #c9a84c;
+      --warm: #8b6914;
+      --light: #faf7f2;
+      --muted: #6b5c45;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--light);
+      color: var(--dark);
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.2rem 3rem;
+      background: rgba(250,247,242,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+    }
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem; font-weight: 700;
+      color: var(--dark); letter-spacing: 0.02em;
+    }
+    .logo span { color: var(--gold); }
+    nav ul { list-style: none; display: flex; gap: 2.5rem; }
+    nav a {
+      text-decoration: none; color: var(--muted);
+      font-size: 0.85rem; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      transition: color 0.3s;
+    }
+    nav a:hover { color: var(--gold); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid; grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 6rem 3rem 3rem;
+      gap: 4rem;
+    }
+    .hero-text { animation: fadeUp 1s ease both; }
+    .hero-tag {
+      display: inline-block;
+      font-size: 0.75rem; font-weight: 500;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid var(--gold);
+      padding: 0.35rem 1rem; border-radius: 2rem;
+      margin-bottom: 1.8rem;
+    }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 5vw, 5rem);
+      line-height: 1.1; font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    h1 em { font-style: italic; color: var(--gold); }
+    .hero-sub {
+      font-size: 1.1rem; color: var(--muted);
+      line-height: 1.7; margin: 1.5rem 0 2.5rem;
+      max-width: 420px;
+    }
+    .btn {
+      display: inline-block;
+      padding: 0.85rem 2.2rem;
+      background: var(--dark); color: var(--cream);
+      text-decoration: none; font-size: 0.85rem;
+      font-weight: 500; letter-spacing: 0.1em;
+      text-transform: uppercase; border-radius: 3px;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .btn:hover { background: var(--gold); transform: translateY(-2px); }
+    .btn-outline {
+      background: transparent; color: var(--dark);
+      border: 1.5px solid var(--dark); margin-left: 1rem;
+    }
+    .btn-outline:hover { background: var(--dark); color: var(--cream); }
+
+    /* Hero image collage */
+    .hero-visual {
+      position: relative; height: 520px;
+      animation: fadeUp 1s 0.3s ease both;
+    }
+    .photo-card {
+      position: absolute;
+      border-radius: 6px; overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+      background: #ddd;
+    }
+    .photo-card::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.3));
+    }
+    .card-1 {
+      width: 260px; height: 340px;
+      top: 0; left: 20px;
+      background: linear-gradient(135deg, #c9a84c22, #c9a84c44),
+        url('https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=600') center/cover;
+    }
+    .card-2 {
+      width: 200px; height: 260px;
+      top: 60px; right: 10px;
+      background: linear-gradient(135deg, #1a141022, #1a141044),
+        url('https://images.unsplash.com/photo-1519741497674-611481863552?w=600') center/cover;
+    }
+    .card-3 {
+      width: 160px; height: 180px;
+      bottom: 20px; left: 80px;
+      background: url('https://images.unsplash.com/photo-1606216794074-735e91aa2c92?w=600') center/cover;
+    }
+    .hero-badge {
+      position: absolute; bottom: 40px; right: 0;
+      background: var(--dark); color: var(--gold);
+      padding: 1.2rem 1.5rem; border-radius: 6px;
+      text-align: center; font-size: 0.8rem;
+      font-weight: 500; letter-spacing: 0.05em;
+    }
+    .hero-badge strong { display: block; font-size: 1.8rem; font-family: 'Playfair Display', serif; }
+
+    /* ── STATS ── */
+    .stats {
+      background: var(--dark);
+      display: flex; justify-content: center;
+      gap: 0; padding: 0;
+    }
+    .stat {
+      flex: 1; text-align: center;
+      padding: 2.5rem 2rem;
+      border-right: 1px solid rgba(255,255,255,0.08);
+    }
+    .stat:last-child { border-right: none; }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem; color: var(--gold);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.78rem; letter-spacing: 0.15em;
+      text-transform: uppercase; color: rgba(255,255,255,0.5);
+      margin-top: 0.4rem;
+    }
+
+    /* ── SERVICES ── */
+    .section { padding: 6rem 3rem; }
+    .section-tag {
+      font-size: 0.75rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 0.8rem; font-weight: 500;
+    }
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.2; margin-bottom: 1rem;
+    }
+    .section-desc {
+      color: var(--muted); font-size: 1rem;
+      line-height: 1.7; max-width: 500px; margin-bottom: 3rem;
+    }
+    .services-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
+      gap: 1.5rem;
+    }
+    .service-card {
+      background: var(--cream);
+      padding: 2rem; border-radius: 8px;
+      border: 1px solid rgba(201,168,76,0.15);
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative; overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0;
+      width: 3px; height: 0;
+      background: var(--gold);
+      transition: height 0.4s;
+    }
+    .service-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.1); }
+    .service-card:hover::before { height: 100%; }
+    .service-icon { font-size: 2rem; margin-bottom: 1rem; }
+    .service-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; margin-bottom: 0.6rem;
+    }
+    .service-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── GALLERY ── */
+    .gallery-section { background: var(--cream); padding: 6rem 3rem; }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: 220px 220px;
+      gap: 12px; margin-top: 3rem;
+    }
+    .gallery-item {
+      border-radius: 6px; overflow: hidden;
+      position: relative; cursor: pointer;
+      background: #ccc;
+    }
+    .gallery-item:first-child { grid-row: 1 / 3; }
+    .gallery-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s;
+    }
+    .gallery-item:hover img { transform: scale(1.06); }
+    .gallery-overlay {
+      position: absolute; inset: 0;
+      background: rgba(26,20,16,0); display: flex;
+      align-items: flex-end; padding: 1.2rem;
+      transition: background 0.3s;
+    }
+    .gallery-item:hover .gallery-overlay { background: rgba(26,20,16,0.4); }
+    .gallery-label {
+      color: white; font-size: 0.78rem;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .gallery-item:hover .gallery-label { opacity: 1; }
+
+    /* ── TESTIMONIAL ── */
+    .testimonials { padding: 6rem 3rem; text-align: center; }
+    .testi-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+      gap: 2rem; margin-top: 3rem; text-align: left;
+    }
+    .testi-card {
+      background: var(--cream); padding: 2rem;
+      border-radius: 8px; border-left: 3px solid var(--gold);
+    }
+    .testi-text {
+      font-family: 'Playfair Display', serif;
+      font-style: italic; font-size: 1rem;
+      line-height: 1.7; color: var(--dark);
+      margin-bottom: 1.2rem;
+    }
+    .testi-name { font-weight: 500; font-size: 0.85rem; color: var(--muted); }
+    .stars { color: var(--gold); font-size: 0.9rem; margin-bottom: 0.8rem; }
+
+    /* ── CONTACT ── */
+    .contact-section {
+      background: var(--dark); color: var(--cream);
+      padding: 6rem 3rem;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 5rem; align-items: center;
+    }
+    .contact-section h2 { color: var(--cream); }
+    .contact-section h2 em { color: var(--gold); }
+    .contact-section .section-tag { color: var(--gold); }
+    .contact-section .section-desc { color: rgba(245,240,232,0.6); }
+    .contact-info { display: flex; flex-direction: column; gap: 1.2rem; margin-top: 2rem; }
+    .contact-item { display: flex; align-items: center; gap: 1rem; }
+    .contact-icon {
+      width: 42px; height: 42px;
+      background: rgba(201,168,76,0.15);
+      border-radius: 50%; display: flex;
+      align-items: center; justify-content: center;
+      font-size: 1.1rem; flex-shrink: 0;
+    }
+    .contact-item span { font-size: 0.9rem; color: rgba(245,240,232,0.7); }
+    .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+    .contact-form input, .contact-form textarea {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(201,168,76,0.25);
+      color: var(--cream); padding: 0.85rem 1.2rem;
+      border-radius: 4px; font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem; outline: none;
+      transition: border-color 0.3s;
+    }
+    .contact-form input:focus, .contact-form textarea:focus {
+      border-color: var(--gold);
+    }
+    .contact-form input::placeholder, .contact-form textarea::placeholder {
+      color: rgba(245,240,232,0.35);
+    }
+    .contact-form textarea { resize: vertical; min-height: 120px; }
+    .btn-gold {
+      background: var(--gold); color: var(--dark);
+      padding: 0.9rem 2rem; border: none; cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      border-radius: 4px; transition: opacity 0.3s, transform 0.2s;
+    }
+    .btn-gold:hover { opacity: 0.85; transform: translateY(-2px); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #0e0c09;
+      padding: 2rem 3rem;
+      display: flex; justify-content: space-between;
+      align-items: center; color: rgba(245,240,232,0.35);
+      font-size: 0.8rem;
+    }
+    footer .logo { font-size: 1.1rem; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      nav ul { display: none; }
+      .hero { grid-template-columns: 1fr; padding: 5rem 1.5rem 3rem; gap: 2rem; }
+      .hero-visual { height: 360px; }
+      .card-1 { width: 180px; height: 240px; }
+      .card-2 { width: 150px; height: 190px; top: 40px; }
+      .card-3 { width: 120px; height: 140px; }
+      .stats { flex-wrap: wrap; }
+      .stat { min-width: 50%; }
+      .section, .gallery-section, .testimonials { padding: 4rem 1.5rem; }
+      .contact-section { grid-template-columns: 1fr; padding: 4rem 1.5rem; gap: 3rem; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .gallery-item:first-child { grid-row: auto; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Daas <span>Studio</span></div>
+  <ul>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <span class="hero-tag">📷 Wedding & Portrait Photography</span>
+    <h1>Ravi Kumar<br><em>Daas Studio</em></h1>
+    <p class="hero-sub">Aapke khaas palo ko hum hamesha ke liye tasveer mein qaaid karte hain — wedding, engagement, aur har yadgar lamha.</p>
+    <a href="#gallery" class="btn">Gallery Dekhein</a>
+    <a href="#contact" class="btn btn-outline">Booking Karein</a>
+  </div>
+  <div class="hero-visual">
+    <div class="photo-card card-1"></div>
+    <div class="photo-card card-2"></div>
+    <div class="photo-card card-3"></div>
+    <div class="hero-badge">
+      <strong>500+</strong>
+      Weddings Covered
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat">
+    <div class="stat-num">500+</div>
+    <div class="stat-label">Weddings</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">10+</div>
+    <div class="stat-label">Saal ka Tajurba</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">1200+</div>
+    <div class="stat-label">Khush Jode</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">5★</div>
+    <div class="stat-label">Rating</div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="section" id="services">
+  <p class="section-tag">Hamari Services</p>
+  <h2>Jo Hum Karte Hain</h2>
+  <p class="section-desc">Har occasion ke liye professional photography — aapke har lamhe ko khubsoorat tasveer mein dhalta hoon.</p>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">💍</div>
+      <h3>Wedding Photography</h3>
+      <p>Shadi ke har lamhe ko capture karna — baraat se lekar vidaai tak. Full-day coverage with cinematic shots.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">💑</div>
+      <h3>Pre-Wedding Shoot</h3>
+      <p>Shadi se pehle couple ki khoobsurat photos — outdoors ya studio mein, aapki pasand ke hisaab se.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🎉</div>
+      <h3>Event Photography</h3>
+      <p>Birthday, anniversary, ring ceremony aur tamam khaas mauqon ki professional photography.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">👶</div>
+      <h3>Maternity & Baby Shoot</h3>
+      <p>Naye mehmaan ke aane ki khushi ko mehfooz karna — pyaari aur dil ko chhoo lene wali photos.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🎞️</div>
+      <h3>Photo Album & Prints</h3>
+      <p>High-quality printed albums aur framed prints — aapki yadein haath mein, hamesha ke liye.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🎬</div>
+      <h3>Videography</h3>
+      <p>Cinematic wedding films aur highlight reels jo aapki kahani khubsoorti se bayaan karein.</p>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery-section" id="gallery">
+  <p class="section-tag">Hamara Kaam</p>
+  <h2>Gallery</h2>
+  <p class="section-desc">Kuch jhalkiyaan — jo lamhe hum ne qaid kiye hain.</p>
+  <div class="gallery-grid">
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=800" alt="Wedding"/>
+      <div class="gallery-overlay"><span class="gallery-label">Wedding</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=600" alt="Couple"/>
+      <div class="gallery-overlay"><span class="gallery-label">Pre-Wedding</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1606216794074-735e91aa2c92?w=600" alt="Portrait"/>
+      <div class="gallery-overlay"><span class="gallery-label">Portrait</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=600" alt="Ceremony"/>
+      <div class="gallery-overlay"><span class="gallery-label">Ceremony</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=600" alt="Reception"/>
+      <div class="gallery-overlay"><span class="gallery-label">Reception</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="about">
+  <p class="section-tag">Hamare Clients</p>
+  <h2>Unke Alfaaz</h2>
+  <p class="section-desc" style="margin:0 auto 0 auto; text-align:center;">Jo unhone kaha jo hamein sab se zyada khush karta hai.</p>
+  <div class="testi-grid">
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">"Ravi ji ne hamare wedding ki itni khoobsurat photos li hain ke hum dekh ke rote hain — khushi ke aansoon se. Daas Studio best hai!"</p>
+      <div class="testi-name">— Sunita & Ajay Sharma, Delhi</div>
+    </div>
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">"Pre-wedding shoot ke liye Maine kai studios dekhe, lekin Ravi Kumar ji ka kaam sabse alag aur dil ko chhone wala tha. Highly recommend!"</p>
+      <div class="testi-name">— Pooja & Rahul Verma, Noida</div>
+    </div>
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">"Professional, friendly aur bahut talented. Hamare reception ki photos ekdum filmy lagi! Shukriya Daas Studio."</p>
+      <div class="testi-name">— Meena & Vikram Gupta, Lucknow</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div>
+    <p class="section-tag">Sampark Karein</p>
+    <h2>Apni <em>Booking</em><br>Karein Aaj</h2>
+    <p class="section-desc">Apne khaas din ki photography book karein — limited dates available hain, jaldi karein!</p>
+    <div class="contact-info">
+      <div class="contact-item">
+        <div class="contact-icon">📞</div>
+        <span>+91 98765 43210</span>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📧</div>
+        <span>daas.studio@gmail.com</span>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📍</div>
+        <span>Daas Studio, Main Market, Aapka Shehar</span>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">⏰</div>
+        <span>Mon–Sat: 10am – 7pm</span>
+      </div>
+    </div>
+  </div>
+  <div class="contact-form">
+    <input type="text" placeholder="Aapka Naam"/>
+    <input type="tel" placeholder="Phone Number"/>
+    <input type="text" placeholder="Wedding / Event Ki Tarikh"/>
+    <textarea placeholder="Koi khaas request ya sawal? Yahan likhein..."></textarea>
+    <button class="btn-gold">Enquiry Bhejein →</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">Daas <span style="color:var(--gold)">Studio</span></div>
+  <span>© 2025 Daas Studio – Ravi Kumar. Sabhi adhikar surakshit.</span>
+</footer>
+
+</body>
+</html>
